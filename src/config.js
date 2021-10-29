@@ -13,7 +13,10 @@ const CONFIG = {
 		{ id: 0, label: 'UEM' },
 		{ id: 1, label: 'UP' }
 	],
-	backendServer: 'https://quizapplicationbackend.glitch.me'
+	backendServer: 'https://quizapplicationbackend.glitch.me',
+	colors: {
+		primary: '#4b0082'
+	}
 };
 
 export default CONFIG;

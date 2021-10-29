@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { View, ScrollView, Alert, TouchableOpacity, Image } from 'react-native';
-import { Button, Text } from 'react-native-paper';
+import { View, ScrollView, Alert, TouchableOpacity, Image, ActivityIndicator } from 'react-native';
+import { Button, Text, Checkbox } from 'react-native-paper';
 import { MaterialIcons } from '@expo/vector-icons';
 
 import * as Font from 'expo-font';
@@ -27,6 +27,8 @@ export default function App() {
   const [past, setPast] = useState([]);
   const [buttonsDisabled, setButtonsDisabled] = useState(false);
   const [connected, setConnected] = useState(true);
+  const [showSettings, setShowSettings] = useState(false);
+  const [soundActivated, setSoundActivated] = useState(true);
 
   const loadFonts = async () => {
     await Font.loadAsync({
@@ -155,7 +157,10 @@ export default function App() {
             <Image source={require('./assets/icon.png')} style={{ width: 20, height: 20 }} />
             <Text style={{ fontSize: 22, marginLeft: 10, fontFamily: 'Title-Font', color: '#4b0082' }}>Aprova</Text>
           </View>
-          <MaterialIcons name={!showCategories ? 'menu' : 'close'} size={35} onPress={() => setShowCategories(!showCategories)} />
+          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            <MaterialIcons name='settings' size={35} onPress={() => setShowSettings(true)} style={{ marginRight: 5 }} />
+            <MaterialIcons name={!showCategories ? 'menu' : 'close'} size={35} onPress={() => setShowCategories(!showCategories)} />
+          </View>
         </View>
         <View style={{
           height: 150, justifyContent: 'center', alignItems: 'center', padding: 10
@@ -179,9 +184,10 @@ export default function App() {
               activeOpacity={.9}
               disabled={buttonsDisabled}
               style={{
-                display: 'flex', flexWrap: 'wrap', borderRadius: 5,
-                margin: 5, padding: 5, backgroundColor: rightAns === a ? '#2bccb1' : '#4b0082',
-                height: 100, justifyContent: 'center', alignItems: 'center'
+                display: 'flex', flexWrap: 'wrap', borderRadius: 10,
+                margin: 5, padding: 5, backgroundColor: rightAns === a ? '#2bccb1' : '#aaa',
+                height: 100, justifyContent: 'center', alignItems: 'center',
+                shadowColor: '#000', shadowOffset: { width: 0, height: 0 }, shadowOpacity: 0.6, shadowRadius: 0, elevation: 3
               }}
               key={a} mode='contained'
               onPress={() => checkValidation(a)}
@@ -218,9 +224,31 @@ export default function App() {
             </View>
           </ScrollView> : null
         }
+        {showSettings ?
+          <View style={{
+            position: 'absolute', flex: 1, backgroundColor: '#fff', padding: 10,
+            width: '100%', height: '100%', zIndex: 3, borderRightColor: '#ccc', borderRightWidth: 1,
+            marginTop: Constants.statusBarHeight
+          }}>
+            <View style={{
+              height: 50, padding: 5, flexDirection: 'row', alignItems: 'center',
+              borderBottomWidth: 1, borderBottomColor: '#ccc', backgroundColor: '#fff'
+            }}>
+              <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
+                <MaterialIcons name='arrow-back' size={35} onPress={() => setShowSettings(false)} style={{ marginRight: 5 }} />
+                <Text style={{ fontSize: 18 }}>Configurações</Text>
+              </View>
+            </View>
+            <Checkbox.Item label="Som" status={soundActivated ? "checked" : "unchecked"}
+              onPress={() => setSoundActivated(!soundActivated)}
+            />
+          </View> : null
+        }
       </View >
     );
   } else {
-    return <View></View>;
+    return <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', paddingTop: Constants.statusBarHeight }}>
+      <ActivityIndicator size='small' color={CONFIG.colors.primary} />
+    </View>;
   }
 }
