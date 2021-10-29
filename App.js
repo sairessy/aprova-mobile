@@ -6,12 +6,13 @@ import { MaterialIcons } from '@expo/vector-icons';
 import * as Font from 'expo-font';
 import * as Network from 'expo-network';
 
+import Constants from 'expo-constants';
+
 import CONFIG from './src/config';
 
 // Components
 import Support from './src/components/Support';
 import CheckVersion from './src/components/CheckVersion';
-import CheckNetwork from './src/components/CheckNetwork';
 
 
 export default function App() {
@@ -145,7 +146,7 @@ export default function App() {
 
   if (fontLoaded && questions.length > 0 && Object.keys(question).length > 0) {
     return (
-      <View style={{ flex: 1, backgroundColor: '#fff' }}>
+      <View style={{ flex: 1, backgroundColor: '#fff', paddingTop: Constants.statusBarHeight }}>
         <View style={{
           height: 50, padding: 5, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center',
           borderBottomWidth: 1, borderBottomColor: '#ccc', backgroundColor: '#fff'
@@ -193,7 +194,8 @@ export default function App() {
         {showCategories ?
           <ScrollView style={{
             position: 'absolute', flex: 1, backgroundColor: '#fff',
-            width: '85%', height: '100%', zIndex: 3, borderRightColor: '#ccc', borderRightWidth: 1
+            width: '85%', height: '100%', zIndex: 3, borderRightColor: '#ccc', borderRightWidth: 1,
+            marginTop: Constants.statusBarHeight
           }}>
             <View style={{ backgroundColor: '#f9f9f9', borderBottomColor: '#999', borderBottomWidth: 1, padding: 10 }}>
               {CONFIG.subjects.map(subject => (
