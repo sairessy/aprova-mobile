@@ -90,7 +90,6 @@ export default function App() {
         { text: 'OK', onPress: () => { } },
       ]);
     }
-
   }
 
   const checkValidation = async (answer) => {
@@ -114,11 +113,14 @@ export default function App() {
               onPress: () => { },
               style: 'cancel',
             },
-            { text: 'OK', onPress: () => { } },
+            {
+              text: 'OK', onPress: () => {
+                setPoints(0);
+                setPast([questions[0].id]);
+                setQuestion(questions[0])
+              }
+            },
           ]);
-          setPoints(0);
-          setPast([questions[0].id]);
-          setQuestion(questions[0])
         }
       }, 500);
     } else {
@@ -129,12 +131,14 @@ export default function App() {
             onPress: () => { },
             style: 'cancel',
           },
-          { text: 'OK', onPress: () => { } },
+          {
+            text: 'OK', onPress: () => {
+              setPoints(0);
+              setPast([questions[0].id]);
+              setQuestion(questions[0])
+            }
+          },
         ]);
-
-        setPoints(0);
-        setPast([questions[0].id]);
-        setQuestion(questions[0])
       }, 500);
     }
     setButtonsDisabled(false);
@@ -154,12 +158,12 @@ export default function App() {
           borderBottomWidth: 1, borderBottomColor: '#ccc', backgroundColor: CONFIG.colors.primary
         }}>
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-            <Image source={require('./assets/icon.png')} style={{ width: 20, height: 20 }} />
+            <Image source={require('./assets/aprova-logo-alt.png')} style={{ width: 20, height: 20 }} />
             <Text style={{ fontSize: 22, marginLeft: 10, fontFamily: 'Title-Font', color: '#662d91' }}>Aprova</Text>
           </View>
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-            <MaterialIcons name='settings' size={30} onPress={() => setShowSettings(true)} style={{ marginRight: 5 }} />
-            <MaterialIcons name={!showCategories ? 'menu' : 'close'} size={35} onPress={() => setShowCategories(!showCategories)} />
+            <MaterialIcons name='settings' size={30} color='#fff' onPress={() => setShowSettings(true)} style={{ marginRight: 5 }} />
+            <MaterialIcons name={!showCategories ? 'menu' : 'close'} color='#fff' size={35} onPress={() => setShowCategories(!showCategories)} />
           </View>
         </View>
         <View style={{
@@ -177,8 +181,8 @@ export default function App() {
           </Text>
 
           <View style={{ height: 20, alignItems: 'center', position: 'absolute', bottom: 5 }}>
-          <Text style={{ textAlign: 'center', fontFamily: 'Inkfree' }}>{points + '/' + questions.length}</Text>
-        </View>
+            <Text style={{ textAlign: 'center', fontFamily: 'Inkfree' }}>{points + '/' + questions.length}</Text>
+          </View>
         </View>
         <ScrollView style={{ flex: 1, backgroundColor: '#ccc' }}>
           {question.answers.map(a => (
