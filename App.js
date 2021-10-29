@@ -108,7 +108,7 @@ export default function App() {
           setPast([...past, q]);
           setPoints(points + 1);
         } else {
-          Alert.alert('Parabens', 'Parabens, respondeu correctamente à todas as questões!', [
+          Alert.alert('Parabens :)', 'Respondeu correctamente à todas as questões!', [
             {
               text: '',
               onPress: () => { },
@@ -151,19 +151,20 @@ export default function App() {
       <View style={{ flex: 1, backgroundColor: '#fff', paddingTop: Constants.statusBarHeight }}>
         <View style={{
           height: 50, padding: 5, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center',
-          borderBottomWidth: 1, borderBottomColor: '#ccc', backgroundColor: '#fff'
+          borderBottomWidth: 1, borderBottomColor: '#ccc', backgroundColor: CONFIG.colors.primary
         }}>
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
             <Image source={require('./assets/icon.png')} style={{ width: 20, height: 20 }} />
-            <Text style={{ fontSize: 22, marginLeft: 10, fontFamily: 'Title-Font', color: '#4b0082' }}>Aprova</Text>
+            <Text style={{ fontSize: 22, marginLeft: 10, fontFamily: 'Title-Font', color: '#662d91' }}>Aprova</Text>
           </View>
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-            <MaterialIcons name='settings' size={35} onPress={() => setShowSettings(true)} style={{ marginRight: 5 }} />
+            <MaterialIcons name='settings' size={30} onPress={() => setShowSettings(true)} style={{ marginRight: 5 }} />
             <MaterialIcons name={!showCategories ? 'menu' : 'close'} size={35} onPress={() => setShowCategories(!showCategories)} />
           </View>
         </View>
         <View style={{
-          height: 150, justifyContent: 'center', alignItems: 'center', padding: 10
+          height: 150, justifyContent: 'center', alignItems: 'center', padding: 10,
+          borderBottomWidth: 1, borderBottomColor: '#bbb'
         }}>
           <Text style={{ fontFamily: 'Inkfree', textAlign: 'center' }}>
             {
@@ -174,9 +175,10 @@ export default function App() {
           <Text style={{ fontFamily: 'Inkfree', textAlign: 'center', fontSize: 16 }}>
             {question.text}
           </Text>
-        </View>
-        <View style={{ height: 20, alignItems: 'center' }}>
+
+          <View style={{ height: 20, alignItems: 'center', position: 'absolute', bottom: 5 }}>
           <Text style={{ textAlign: 'center', fontFamily: 'Inkfree' }}>{points + '/' + questions.length}</Text>
+        </View>
         </View>
         <ScrollView style={{ flex: 1, backgroundColor: '#ccc' }}>
           {question.answers.map(a => (
@@ -185,14 +187,14 @@ export default function App() {
               disabled={buttonsDisabled}
               style={{
                 display: 'flex', flexWrap: 'wrap', borderRadius: 10,
-                margin: 5, padding: 5, backgroundColor: rightAns === a ? '#2bccb1' : '#aaa',
+                margin: 5, padding: 5, backgroundColor: rightAns === a ? '#2bccb1' : '#fff',
                 height: 100, justifyContent: 'center', alignItems: 'center',
                 shadowColor: '#000', shadowOffset: { width: 0, height: 0 }, shadowOpacity: 0.6, shadowRadius: 0, elevation: 3
               }}
               key={a} mode='contained'
               onPress={() => checkValidation(a)}
             >
-              <Text style={{ textAlign: 'center', color: '#fff', width: '100%' }}>{a}</Text>
+              <Text style={{ textAlign: 'center', color: CONFIG.colors.primary, width: '100%' }}>{a}</Text>
             </TouchableOpacity>
           ))}
         </ScrollView>
@@ -226,7 +228,7 @@ export default function App() {
         }
         {showSettings ?
           <View style={{
-            position: 'absolute', flex: 1, backgroundColor: '#fff', padding: 10,
+            position: 'absolute', flex: 1, backgroundColor: '#fff',
             width: '100%', height: '100%', zIndex: 3, borderRightColor: '#ccc', borderRightWidth: 1,
             marginTop: Constants.statusBarHeight
           }}>
@@ -235,7 +237,7 @@ export default function App() {
               borderBottomWidth: 1, borderBottomColor: '#ccc', backgroundColor: '#fff'
             }}>
               <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                <MaterialIcons name='arrow-back' size={35} onPress={() => setShowSettings(false)} style={{ marginRight: 5 }} />
+                <MaterialIcons name='arrow-back' size={30} onPress={() => setShowSettings(false)} style={{ marginRight: 5 }} />
                 <Text style={{ fontSize: 18 }}>Configurações</Text>
               </View>
             </View>
