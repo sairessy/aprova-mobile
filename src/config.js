@@ -16,7 +16,8 @@ const CONFIG = {
 	backendServer: 'https://quizapplicationbackend.glitch.me',
 	colors: {
 		primary: '#4b0082',
-		statusbar: '#590297'
+		statusbar: '#590297',
+		gBlue: '#1a73e8'
 	}
 };
 

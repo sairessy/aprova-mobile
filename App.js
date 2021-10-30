@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { View, ScrollView, Alert, TouchableOpacity, Image, ActivityIndicator } from 'react-native';
-import { Button, Text, Checkbox } from 'react-native-paper';
+import { Button, Text, Checkbox, Switch } from 'react-native-paper';
 import { MaterialIcons } from '@expo/vector-icons';
 
 import * as Font from 'expo-font';
@@ -29,6 +29,7 @@ export default function App() {
   const [connected, setConnected] = useState(true);
   const [showSettings, setShowSettings] = useState(false);
   const [soundActivated, setSoundActivated] = useState(true);
+  const [showFeedback, setShowFeedback] = useState(false);
 
   const loadFonts = async () => {
     await Font.loadAsync({
@@ -162,6 +163,7 @@ export default function App() {
             <Text style={{ fontSize: 22, marginLeft: 10, fontFamily: 'Title-Font', color: '#662d91' }}>Aprova</Text>
           </View>
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            <MaterialIcons name='feedback' size={30} color='#fff' onPress={() => setShowFeedback(true)} style={{ marginRight: 5 }} />
             <MaterialIcons name='settings' size={30} color='#fff' onPress={() => setShowSettings(true)} style={{ marginRight: 5 }} />
             <MaterialIcons name={!showCategories ? 'menu' : 'close'} color='#fff' size={35} onPress={() => setShowCategories(!showCategories)} />
           </View>
@@ -245,10 +247,20 @@ export default function App() {
                 <Text style={{ fontSize: 18 }}>Configurações</Text>
               </View>
             </View>
-            <Checkbox.Item label="Som" status={soundActivated ? "checked" : "unchecked"}
+            <Checkbox.Item label="Som" color={CONFIG.colors.primary} status={soundActivated ? "checked" : "unchecked"}
               onPress={() => setSoundActivated(!soundActivated)}
             />
+            {/* <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', padding: 5 }}>
+              <Text style={{ marginLeft: 10, fontSize: 16 }}>Som</Text>
+              <Switch color={CONFIG.colors.primary} value={soundActivated} onValueChange={() => setSoundActivated(!soundActivated)} />
+            </View> */}
           </View> : null
+        }
+
+        {showFeedback ?
+          <Feedback
+            btnBack={<MaterialIcons name='arrow-back' size={30} onPress={() => setShowFeedback(false)} style={{ marginRight: 5 }} />}
+          /> : null
         }
       </View >
     );

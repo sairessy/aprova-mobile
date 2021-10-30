@@ -7,7 +7,7 @@ import CONFIG from '../config';
 import Constants from 'expo-constants';
 
 export default function CheckVersion() {
-  const [lastVersion, setLastVersion] = useState(false);
+  const [lastVersion, setLastVersion] = useState(true);
   const [appInfo, setAppInfo] = useState({});
 
 
@@ -20,7 +20,6 @@ export default function CheckVersion() {
     } catch (err) {
       console.log('Failed to fetch!');
     }
-
   }
 
   const downloadLastVersion = async () => {
