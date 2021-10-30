@@ -1,8 +1,10 @@
 
 import React, { useEffect, useState } from 'react';
-import { View } from 'react-native';
+import { View, Alert } from 'react-native';
 import { Button, Text, TextInput } from 'react-native-paper';
 import CONFIG from '../config';
+
+import Constants from 'expo-constants';
 
 export default function Feedback({ btnBack }) {
 
@@ -60,8 +62,8 @@ export default function Feedback({ btnBack }) {
         </View>
       </View>
       <View style={{ padding: 5 }}>
-        <TextInput mode='outlined' style={{ marginBottom: 10 }} value={feedback} onChangeText={(text) => setFeedback(text)} />
-        <TextInput mode='outlined' style={{ marginBottom: 10 }} value={email} onChangeText={(text) => setEmail(text)} />
+        <TextInput mode='outlined' style={{ marginBottom: 10, height: 150 }} value={feedback} onChangeText={(text) => setFeedback(text)} multiline={true} numberOflines={4} maxLength={200} placeholder='Dê-nos o seu feedback'/>
+        <TextInput mode='outlined' style={{ marginBottom: 10 }} value={email} onChangeText={(text) => setEmail(text)} placeholder='Email'/>
         <Button
           onPress={() => sendFeedback()}
           mode='contained'

@@ -13,7 +13,7 @@ import CONFIG from './src/config';
 // Components
 import Support from './src/components/Support';
 import CheckVersion from './src/components/CheckVersion';
-
+import Feedback from './src/components/Feedback';
 
 export default function App() {
 
