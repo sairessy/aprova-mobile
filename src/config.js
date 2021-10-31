@@ -7,7 +7,8 @@ const CONFIG = {
 		{ id: 3, label: 'Geografia' },
 		{ id: 4, label: 'Biologia' },
 		{ id: 5, label: 'Química' },
-		{ id: 6, label: 'Física' }
+		{ id: 6, label: 'Física' },
+		{ id: 7, label: 'Matemática' }
 	],
 	institutions: [
 		{ id: 0, label: 'UEM' },

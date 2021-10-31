@@ -52,9 +52,10 @@ export default function App() {
     const response = await fetch(CONFIG.backendServer + '/questions');
     const json = await response.json();
     const allQuestions = json.data;
+    const aux = Math.round(Math.random() * (allQuestions.length - 1));
     setQuestions(allQuestions);
-    setQuestion(allQuestions[0]);
-    setPast([allQuestions[0].id]);
+    setQuestion(allQuestions[aux]);
+    setPast([allQuestions[aux].id]);
   }
 
   const getQuestionsFrom = async (subject) => {
@@ -65,21 +66,23 @@ export default function App() {
       const response = await fetch(CONFIG.backendServer + '/questions');
       const json = await response.json();
       const allQuestions = json.data;
+      const aux = Math.round(Math.random() * (allQuestions.length - 1));
       setCategory(subject);
       setShowCategories(false);
       setQuestions(allQuestions);
-      setQuestion(allQuestions[0]);
-      setPast([allQuestions[0].id]);
+      setQuestion(allQuestions[aux]);
+      setPast([allQuestions[aux].id]);
       setPoints(0);
       return;
     }
 
     if (qs.length > 0) {
+      const aux = Math.round(Math.random() * (qs.length - 1));
       setCategory(subject);
       setShowCategories(false);
       setQuestions(qs);
-      setQuestion(qs[0]);
-      setPast([qs[0].id]);
+      setQuestion(qs[aux]);
+      setPast([qs[aux].id]);
       setPoints(0);
     } else {
       Alert.alert('Brevemente!', 'Ainda não há questões de ' + subject.label + '.', [
@@ -116,9 +119,10 @@ export default function App() {
             },
             {
               text: 'OK', onPress: () => {
+                const aux = Math.round(Math.random() * (questions.length - 1));
                 setPoints(0);
-                setPast([questions[0].id]);
-                setQuestion(questions[0])
+                setPast([questions[aux].id]);
+                setQuestion(questions[aux])
               }
             },
           ]);
@@ -126,7 +130,7 @@ export default function App() {
       }, 500);
     } else {
       setTimeout(() => {
-        Alert.alert('Incorrecto :(', 'A resposta certa é ' + question.answers[question.correct] + '.', [
+        Alert.alert('Incorrecto :(', 'A resposta certa é: ' + question.answers[question.correct] + '.', [
           {
             text: '',
             onPress: () => { },
@@ -134,9 +138,10 @@ export default function App() {
           },
           {
             text: 'OK', onPress: () => {
+              const aux = Math.round(Math.random() * (questions.length - 1));
               setPoints(0);
-              setPast([questions[0].id]);
-              setQuestion(questions[0])
+              setPast([questions[aux].id]);
+              setQuestion(questions[aux]);
             }
           },
         ]);
@@ -155,7 +160,7 @@ export default function App() {
     return (
       <View style={{ flex: 1, backgroundColor: '#fff', paddingTop: Constants.statusBarHeight }}>
         <View style={{
-          height: 50, padding: 5, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center',
+          height: 60, padding: 5, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center',
           borderBottomWidth: 1, borderBottomColor: '#ccc', backgroundColor: CONFIG.colors.primary
         }}>
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
@@ -163,9 +168,9 @@ export default function App() {
             <Text style={{ fontSize: 22, marginLeft: 10, fontFamily: 'Title-Font', color: '#662d91' }}>Aprova</Text>
           </View>
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-            <MaterialIcons name='feedback' size={30} color='#fff' onPress={() => setShowFeedback(true)} style={{ marginRight: 5 }} />
-            <MaterialIcons name='settings' size={30} color='#fff' onPress={() => setShowSettings(true)} style={{ marginRight: 5 }} />
-            <MaterialIcons name={!showCategories ? 'menu' : 'close'} color='#fff' size={35} onPress={() => setShowCategories(!showCategories)} />
+            <MaterialIcons name='feedback' size={20} color='#fff' onPress={() => setShowFeedback(true)} style={{ marginRight: 10 }} />
+            <MaterialIcons name='settings' size={20} color='#fff' onPress={() => setShowSettings(true)} style={{ marginRight: 10 }} />
+            <MaterialIcons name={!showCategories ? 'menu' : 'close'} color='#fff' size={25} onPress={() => setShowCategories(!showCategories)} />
           </View>
         </View>
         <View style={{
@@ -239,12 +244,12 @@ export default function App() {
             marginTop: Constants.statusBarHeight
           }}>
             <View style={{
-              height: 50, padding: 5, flexDirection: 'row', alignItems: 'center',
-              borderBottomWidth: 1, borderBottomColor: '#ccc', backgroundColor: '#fff'
+              height: 60, padding: 5, flexDirection: 'row', alignItems: 'center',
+              backgroundColor: CONFIG.colors.primary
             }}>
               <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                <MaterialIcons name='arrow-back' size={30} onPress={() => setShowSettings(false)} style={{ marginRight: 5 }} />
-                <Text style={{ fontSize: 18 }}>Configurações</Text>
+                <MaterialIcons name='arrow-back' size={30} onPress={() => setShowSettings(false)} style={{ marginRight: 5, color: '#fff' }} />
+                <Text style={{ fontSize: 18, color: '#fff' }}>Configurações</Text>
               </View>
             </View>
             <Checkbox.Item label="Som" color={CONFIG.colors.primary} status={soundActivated ? "checked" : "unchecked"}
@@ -259,7 +264,11 @@ export default function App() {
 
         {showFeedback ?
           <Feedback
-            btnBack={<MaterialIcons name='arrow-back' size={30} onPress={() => setShowFeedback(false)} style={{ marginRight: 5 }} />}
+            btnBack={
+              <MaterialIcons name='arrow-back' size={30}
+                onPress={() => setShowFeedback(false)} style={{ marginRight: 5, color: '#fff' }}
+              />
+            }
           /> : null
         }
       </View >

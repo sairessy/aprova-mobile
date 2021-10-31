@@ -18,6 +18,7 @@ export default function Feedback({ btnBack }) {
       const response = await fetch(CONFIG.backendServer + '/feedback', {
         method: 'POST',
         headers: {
+          Accept: 'application/json',
           'Content-Type': 'application/json'
         },
         body: JSON.stringify(data)
@@ -53,17 +54,17 @@ export default function Feedback({ btnBack }) {
       marginTop: Constants.statusBarHeight
     }}>
       <View style={{
-        height: 50, padding: 5, flexDirection: 'row', alignItems: 'center',
-        borderBottomWidth: 1, borderBottomColor: '#ccc', backgroundColor: '#fff'
+        height: 60, padding: 5, flexDirection: 'row', alignItems: 'center',
+        backgroundColor: CONFIG.colors.primary
       }}>
         <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
           {btnBack}
-          <Text style={{ fontSize: 18 }}>Feedback</Text>
+          <Text style={{ fontSize: 18, color: '#fff' }}>Feedback</Text>
         </View>
       </View>
       <View style={{ padding: 5 }}>
-        <TextInput mode='outlined' style={{ marginBottom: 10, height: 150 }} value={feedback} onChangeText={(text) => setFeedback(text)} multiline={true} numberOflines={4} maxLength={200} placeholder='Dê-nos o seu feedback'/>
-        <TextInput mode='outlined' style={{ marginBottom: 10 }} value={email} onChangeText={(text) => setEmail(text)} placeholder='Email'/>
+        <TextInput mode='outlined' style={{ marginBottom: 10, height: 150 }} value={feedback} onChangeText={(text) => setFeedback(text)} multiline={true} numberOflines={4} maxLength={200} placeholder='Dê-nos o seu feedback' />
+        <TextInput mode='outlined' style={{ marginBottom: 10 }} value={email} onChangeText={(text) => setEmail(text)} placeholder='Email' />
         <Button
           onPress={() => sendFeedback()}
           mode='contained'
