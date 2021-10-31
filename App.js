@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { View, ScrollView, Alert, TouchableOpacity, Image, ActivityIndicator } from 'react-native';
-import { Button, Text, Checkbox, Switch } from 'react-native-paper';
+import { View, ScrollView, Alert, TouchableOpacity, Image, ActivityIndicator, Linking } from 'react-native';
+import { Button, Text, Checkbox, Switch, IconButton } from 'react-native-paper';
 import { MaterialIcons } from '@expo/vector-icons';
 
 import * as Font from 'expo-font';
 import * as Network from 'expo-network';
+import { Audio } from 'expo-av';
 
 import Constants from 'expo-constants';
 
@@ -30,6 +31,7 @@ export default function App() {
   const [showSettings, setShowSettings] = useState(false);
   const [soundActivated, setSoundActivated] = useState(true);
   const [showFeedback, setShowFeedback] = useState(false);
+  const [sound, setSound] = useState(null);
 
   const loadFonts = async () => {
     await Font.loadAsync({
@@ -41,6 +43,17 @@ export default function App() {
     });
 
     setFontLoaded(true);
+  }
+
+  const loadSound = async () => {
+    const { sound } = await Audio.Sound.createAsync(
+      require('./assets/sound/correct.mp3')
+    );
+    setSound(sound);
+  }
+
+  const playSound = async () => {
+    await sound.playAsync();
   }
 
   const checkConnection = async () => {
@@ -153,6 +166,7 @@ export default function App() {
   useEffect(() => {
     loadFonts();
     getQuestions();
+    loadSound();
     checkConnection();
   }, []);
 
@@ -165,16 +179,19 @@ export default function App() {
         }}>
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
             <Image source={require('./assets/aprova-logo-alt.png')} style={{ width: 20, height: 20 }} />
-            <Text style={{ fontSize: 22, marginLeft: 10, fontFamily: 'Title-Font', color: '#662d91' }}>Aprova</Text>
+            <Text style={{ fontSize: 20, marginLeft: 10, fontFamily: 'Title-Font', color: '#fff' }}>Aprova</Text>
           </View>
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-            <MaterialIcons name='feedback' size={20} color='#fff' onPress={() => setShowFeedback(true)} style={{ marginRight: 10 }} />
-            <MaterialIcons name='settings' size={20} color='#fff' onPress={() => setShowSettings(true)} style={{ marginRight: 10 }} />
-            <MaterialIcons name={!showCategories ? 'menu' : 'close'} color='#fff' size={25} onPress={() => setShowCategories(!showCategories)} />
+            <IconButton icon='whatsapp' size={20} color='#fff' onPress={() => {
+              Linking.openURL('https://wa.me/+258847460853');
+            }} style={{ marginRight: 10 }} />
+            <IconButton icon='message' size={20} color='#fff' onPress={() => setShowFeedback(true)} style={{ marginRight: 10 }} />
+            <IconButton icon='tools' size={20} color='#fff' onPress={() => setShowSettings(true)} style={{ marginRight: 10 }} />
+            <IconButton icon={!showCategories ? 'menu' : 'close'} color='#fff' size={25} onPress={() => setShowCategories(!showCategories)} />
           </View>
         </View>
         <View style={{
-          height: 150, justifyContent: 'center', alignItems: 'center', padding: 10,
+          height: 170, justifyContent: 'center', alignItems: 'center', padding: 10,
           borderBottomWidth: 1, borderBottomColor: '#bbb'
         }}>
           <Text style={{ fontFamily: 'Inkfree', textAlign: 'center' }}>
@@ -205,7 +222,7 @@ export default function App() {
               key={a} mode='contained'
               onPress={() => checkValidation(a)}
             >
-              <Text style={{ textAlign: 'center', color: CONFIG.colors.primary, width: '100%' }}>{a}</Text>
+              <Text style={{ textAlign: 'center', width: '100%', color: rightAns === a ? '#fff' : CONFIG.colors.primary }}>{a}</Text>
             </TouchableOpacity>
           ))}
         </ScrollView>
@@ -240,7 +257,7 @@ export default function App() {
         {showSettings ?
           <View style={{
             position: 'absolute', flex: 1, backgroundColor: '#fff',
-            width: '100%', height: '100%', zIndex: 3, borderRightColor: '#ccc', borderRightWidth: 1,
+            width: '100%', height: '100%', zIndex: 3,
             marginTop: Constants.statusBarHeight
           }}>
             <View style={{
@@ -248,7 +265,7 @@ export default function App() {
               backgroundColor: CONFIG.colors.primary
             }}>
               <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                <MaterialIcons name='arrow-back' size={30} onPress={() => setShowSettings(false)} style={{ marginRight: 5, color: '#fff' }} />
+                <IconButton icon='arrow-left' color='#fff' size={25} onPress={() => setShowSettings(false)} style={{ marginRight: 5 }} />
                 <Text style={{ fontSize: 18, color: '#fff' }}>Configurações</Text>
               </View>
             </View>
@@ -265,7 +282,7 @@ export default function App() {
         {showFeedback ?
           <Feedback
             btnBack={
-              <MaterialIcons name='arrow-back' size={30}
+              <IconButton icon='arrow-left' size={25} color='#fff'
                 onPress={() => setShowFeedback(false)} style={{ marginRight: 5, color: '#fff' }}
               />
             }
@@ -275,7 +292,7 @@ export default function App() {
     );
   } else {
     return <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', paddingTop: Constants.statusBarHeight }}>
-      <ActivityIndicator size='small' color={CONFIG.colors.primary} />
+      <ActivityIndicator size='large' color={CONFIG.colors.primary} />
     </View>;
   }
 }

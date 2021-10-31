@@ -50,7 +50,7 @@ export default function Feedback({ btnBack }) {
   return (
     <View style={{
       position: 'absolute', flex: 1, backgroundColor: '#fff',
-      width: '100%', height: '100%', zIndex: 3, borderRightColor: '#ccc', borderRightWidth: 1,
+      width: '100%', height: '100%', zIndex: 3,
       marginTop: Constants.statusBarHeight
     }}>
       <View style={{
@@ -63,12 +63,12 @@ export default function Feedback({ btnBack }) {
         </View>
       </View>
       <View style={{ padding: 5 }}>
-        <TextInput mode='outlined' style={{ marginBottom: 10, height: 150 }} value={feedback} onChangeText={(text) => setFeedback(text)} multiline={true} numberOflines={4} maxLength={200} placeholder='Dê-nos o seu feedback' />
-        <TextInput mode='outlined' style={{ marginBottom: 10 }} value={email} onChangeText={(text) => setEmail(text)} placeholder='Email' />
+        <TextInput mode='outlined' style={{ marginBottom: 10, height: 150, backgroundColor: '#fff' }} value={feedback} onChangeText={(text) => setFeedback(text)} multiline={true} numberOflines={4} maxLength={200} placeholder='Dê-nos o seu feedback' />
+        <TextInput mode='outlined' style={{ marginBottom: 10, backgroundColor: '#fff' }} value={email} onChangeText={(text) => setEmail(text)} placeholder='Email' />
         <Button
           onPress={() => sendFeedback()}
           mode='contained'
-          style={{ backgroundColor: CONFIG.colors.primary }}
+          style={{ backgroundColor: CONFIG.colors.primary, padding: 10 }}
           labelStyle={{ textTransform: 'capitalize', color: '#fff' }}
         >
           Enviar
